@@ -26,7 +26,7 @@ namespace SupermarketWEB.Pages.Products
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || Product == null)
+            if (!ModelState.IsValid)
             {
                 ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", Product.CategoryId);
                 return Page();
@@ -39,4 +39,3 @@ namespace SupermarketWEB.Pages.Products
         }
     }
 }
-
