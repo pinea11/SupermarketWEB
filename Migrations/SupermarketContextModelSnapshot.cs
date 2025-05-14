@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SupermarketWEB.Data;
+using SupermarketEF.Data;
 
 #nullable disable
 
-namespace SupermarketWEB.Migrations
+namespace SupermarketEF.Migrations
 {
     [DbContext(typeof(SupermarketContext))]
     partial class SupermarketContextModelSnapshot : ModelSnapshot
@@ -21,7 +21,7 @@ namespace SupermarketWEB.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SupermarketWEB.Models.Category", b =>
+            modelBuilder.Entity("SupermarketEF.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.PayMode", b =>
+            modelBuilder.Entity("SupermarketEF.Models.PayMode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,7 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("PayModes");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Product", b =>
+            modelBuilder.Entity("SupermarketEF.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +89,7 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Provider", b =>
+            modelBuilder.Entity("SupermarketEF.Models.Provider", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,9 +112,34 @@ namespace SupermarketWEB.Migrations
                     b.ToTable("Providers");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Product", b =>
+            modelBuilder.Entity("SupermarketEF.Models.User", b =>
                 {
-                    b.HasOne("SupermarketWEB.Models.Category", "Category")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SupermarketEF.Models.Product", b =>
+                {
+                    b.HasOne("SupermarketEF.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -123,7 +148,7 @@ namespace SupermarketWEB.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SupermarketWEB.Models.Category", b =>
+            modelBuilder.Entity("SupermarketEF.Models.Category", b =>
                 {
                     b.Navigation("Products");
                 });

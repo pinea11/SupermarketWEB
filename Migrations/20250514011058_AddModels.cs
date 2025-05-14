@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace SupermarketWEB.Migrations
+namespace SupermarketEF.Migrations
 {
     /// <inheritdoc />
-    public partial class AddProvidersAndPayModes : Migration
+    public partial class AddModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,6 +54,21 @@ namespace SupermarketWEB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -92,6 +107,9 @@ namespace SupermarketWEB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Providers");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Categories");
