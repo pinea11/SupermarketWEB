@@ -10,7 +10,7 @@ namespace SupermarketWEB.Pages.Account
     public class LoginModel : PageModel
     {
         [BindProperty]
-        public AppUser Appuser { get; set; }
+        public AppUser Appuser { get; set; } = new AppUser();
 
 
         public async Task<IActionResult> OnPostAsync()

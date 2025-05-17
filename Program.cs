@@ -12,8 +12,7 @@ namespace SupermarketWEB
             // Add services to the container.
             builder.Services.AddRazorPages();
 
-            builder.Services.AddAuthentication("MyCookieAuth")
-                .AddCookie("MyCookieAuth", config =>
+            builder.Services.AddAuthentication().AddCookie("MyCookieAuth", config =>
                 {
                     config.Cookie.Name = "MyCookieAuth";
                     config.LoginPath = "/Account/Login";

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SupermarketWEB.Data;
@@ -5,6 +6,7 @@ using SupermarketWEB.Models;
 
 namespace SupermarketWEB.Pages.Categories
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly SupermarketContext _context;
@@ -14,7 +16,7 @@ namespace SupermarketWEB.Pages.Categories
             _context = context;
         }
 
-        public IList<Category> Categories { get; set; } = default!;
+        public IList<Category> Categories { get; set; } = new List<Category>();
 
         public async Task OnGetAsync()
         {

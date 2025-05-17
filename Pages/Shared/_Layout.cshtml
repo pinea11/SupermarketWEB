@@ -1,6 +1,6 @@
 ﻿@using SupermarketWEB
 @using SupermarketWEB.Models
-@using SupermarketWEB.Services
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,35 +22,24 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
-                    <!-- 🔁 AQUÍ VA EL MENU DINÁMICO -->
+                    
                     <ul class="navbar-nav flex-grow-1">
-                        @if (Session.CurrentUser != null)
-                        {
-                            if (Session.CurrentUser.Role == "Administrador")
-                            {
+                        
                                 <li class="nav-item"><a class="nav-link text-dark" asp-page="/Index">Home</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/Account/Login">Iniciar Sesion</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" asp-page="/Categories/Index">Categories</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" asp-page="/Products/Index">Products</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" asp-page="/PayModes/Index">PayModes</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" asp-page="/Providers/Index">Providers</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" asp-page="/Customers/Index">Customers</a></li>
-                            }
-                            else if (Session.CurrentUser.Role == "Cliente")
-                            {
-                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/Cliente/Inicio">Inicio</a></li>
-                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/Categories/Index">Categories</a></li>
-                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/Products/Index">Products</a></li>
-                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/PayModes/Index">PayModes</a></li>
-                            }
-
-                            <li class="nav-item"><a class="nav-link text-dark" asp-page="/Account/Logout">Cerrar sesión</a></li>
-                        }
-                        else
-                        {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-page="/Account/Login">Iniciar sesión</a></li>
-                        }
+                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/Account/Logout">Cerrar sesión</a></li>
+                            
+                        
                     </ul>
 
+                </div>
+                <div>
+                    <partial name="_LoginStatusPartial" />
                 </div>
             </div>
         </nav>
