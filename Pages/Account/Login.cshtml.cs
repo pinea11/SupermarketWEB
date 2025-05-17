@@ -1,44 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SupermarketWEB.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using SupermarketWEB.Models;
-using SupermarketWEB.Services;
 
 namespace SupermarketWEB.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SupermarketContext _context;
-
-        public LoginModel(SupermarketContext context)
-        {
-            _context = context;
-        }
-
         [BindProperty]
-        public User User { get; set; }
+        public AppUser Appuser { get; set; }
 
-        public string ErrorMessage { get; set; } = string.Empty;
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            var passwordHash = AuthService.HashPassword(User.PasswordHash);
-
-            var user = _context.Users.FirstOrDefault(u =>
-                u.Username == User.Username && u.PasswordHash == passwordHash);
-
-            if (user != null)
+            if (Appuser.Email == "correo@gmail.com" && Appuser.Password == "12345")
             {
-                Session.CurrentUser = user;
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, "admin"),
+                    new Claim(ClaimTypes.Email, Appuser.Email),
+                };
 
-                if (user.Role == "Administrador")
-                    return RedirectToPage("/Index");
+                var identity = new ClaimsIdentity(claims, "MyCookieAuth");
+                var principal = new ClaimsPrincipal(identity);
 
-                if (user.Role =="Cliente")
-                return RedirectToPage("/Cliente/Inicio");
+                await HttpContext.SignInAsync("MyCookieAuth", principal);
+
+                return RedirectToPage("/Index");
             }
-
-            ErrorMessage = "Credenciales incorrectas.";
             return Page();
         }
     }
